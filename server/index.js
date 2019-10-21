@@ -1,4 +1,4 @@
-// require("./db/sqlite");
+require("./db/sqlite");
 
 const express = require("express");
 const bodyParser = require("body-parser");
