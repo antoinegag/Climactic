@@ -1,0 +1,17 @@
+{
+  "dependencies": {},
+  "name": "climactic",
+  "version": "0.1.0",
+  "scripts": {
+    "dev:server": "nodemon server/index.js --config nodemon.json",
+    "dev:client": "cd client && yarn start",
+    "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'"
+  },
+  "repository": "git@github.com:antoinegag/climactic.git",
+  "author": "Antoine Gagnon",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "nodemon": "^1.19.4"
+  }
+}
