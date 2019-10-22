@@ -71,8 +71,8 @@ async function register(ip, name) {
 }
 exports.register = register;
 
-function getUrl(station) {
-  return `http://${station.ip}`;
+function getUrl(ip) {
+  return `http://${ip}`;
 }
 
 async function getData(stationId) {
@@ -82,7 +82,7 @@ async function getData(stationId) {
     throw new Error("Invalid station id");
   }
 
-  const res = await fetch(`${getUrl(station)}/data`);
+  const res = await queryStation(station.ip, "/data");
 
   if (!res.ok) {
     throw new Error(`Unable to get data: ${response.statusText}`);
@@ -91,3 +91,38 @@ async function getData(stationId) {
   return res.json();
 }
 exports.getData = getData;
+
+async function queryStation(ip, path, method = "GET") {
+  return fetch(`${getUrl(ip)}${path}`, { method });
+}
+
+async function beep(id, double) {
+  const station = await get(id);
+  if (station) {
+    try {
+      await queryStation(station.ip, `/${double ? "d" : ""}beep`, "POST");
+    } catch (error) {
+      throw "Unable to beep device";
+    }
+  }
+}
+exports.beep = beep;
+
+async function getStatus(ip) {
+  try {
+    const res = await queryStation(ip, "/");
+    const status = await res.json();
+    return {
+      online: true,
+      version: status.version
+    };
+  } catch (error) {
+    return {
+      online: false,
+      version: null
+    };
+  }
+
+  return true;
+}
+exports.getStatus = getStatus;

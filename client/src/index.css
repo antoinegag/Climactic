@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+nav {
+  font-size: 20px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
