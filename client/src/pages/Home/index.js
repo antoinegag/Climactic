@@ -30,7 +30,7 @@ const Home = props => {
           <Container>
             <Row className="justify-content-md-left">
               {stations.map(station => (
-                <Col className="border px-4 py-2 mx-2 my-2" md="3">
+                <Col className="border px-4 py-2 mx-2 my-2" md="4">
                   <Station station={station} />
                 </Col>
               ))}

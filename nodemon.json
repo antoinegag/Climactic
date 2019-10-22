@@ -1,5 +1,7 @@
 {
   "verbose": false,
-  "ignore": ["client/*"],
-  "watch": ["server/*"]
+  "ignore": ["client/*", "server/*.test.ts"],
+  "watch": ["server/*"],
+  "exec": "yarn run dev:server:start",
+  "ext": "ts"
 }

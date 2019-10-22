@@ -3,7 +3,9 @@
   "name": "climactic",
   "version": "0.1.0",
   "scripts": {
-    "dev:server": "nodemon server/index.js --config nodemon.json",
+    "dev:server:start": "node --inspect=5858 -r ts-node/register ./server/index.ts",
+    "build:server": "tsc",
+    "dev:server": "nodemon",
     "dev:client": "cd client && yarn start",
     "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'"
   },
@@ -12,6 +14,9 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^5.0.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.6.4"
   }
 }

@@ -1,6 +1,6 @@
 const db = require("../db/sqlite");
 const formatHelper = require("../helpers/formatHelper");
-const fetch = require("node-fetch");
+const nfetch = require("node-fetch");
 
 async function get(id) {
   return new Promise((resolve, reject) => {
@@ -82,10 +82,11 @@ async function getData(stationId) {
     throw new Error("Invalid station id");
   }
 
+  //@ts-ignore
   const res = await queryStation(station.ip, "/data");
 
   if (!res.ok) {
-    throw new Error(`Unable to get data: ${response.statusText}`);
+    throw new Error(`Unable to get data: ${res.statusText}`);
   }
 
   return res.json();
@@ -100,6 +101,7 @@ async function beep(id, double) {
   const station = await get(id);
   if (station) {
     try {
+      //@ts-ignore
       await queryStation(station.ip, `/${double ? "d" : ""}beep`, "POST");
     } catch (error) {
       throw "Unable to beep device";

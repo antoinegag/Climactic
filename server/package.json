@@ -10,5 +10,13 @@
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
     "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.1",
+    "@types/express": "^4.17.1",
+    "@types/listr": "^0.14.2",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.11.2",
+    "@types/sqlite3": "^3.1.5"
   }
 }

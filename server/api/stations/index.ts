@@ -1,4 +1,4 @@
-const express = require("express");
+import * as express from "express";
 const router = express.Router();
 const stations = require("../../stations");
 
@@ -82,4 +82,4 @@ router.post("/register", async (req, res) => {
   }
 });
 
-module.exports = router;
+export = router;

@@ -1,10 +1,10 @@
 require("./db/sqlite");
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const logger = require("morgan");
-const path = require("path");
-const Listr = require("listr");
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import * as logger from "morgan";
+import * as path from "path";
+import * as Listr from "listr";
 
 const env = process.env.NODE_ENV || "dev";
 const port = process.env.PORT;
@@ -36,7 +36,7 @@ const tasks = new Listr([
         {
           title: "Registring API routes",
           task: () => {
-            const apiRouter = require("./api/index.js");
+            const apiRouter = require("./api/index");
             app.use("/api", apiRouter);
           }
         },
