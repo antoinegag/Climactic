@@ -7,14 +7,18 @@
     "build:server": "tsc",
     "dev:server": "nodemon",
     "dev:client": "cd client && yarn start",
-    "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'"
+    "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'",
+    "test": "jest"
   },
   "repository": "git@github.com:antoinegag/climactic.git",
   "author": "Antoine Gagnon",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^24.0.19",
     "concurrently": "^5.0.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4",
+    "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "tsc": "^1.20150623.0",
     "typescript": "^3.6.4"

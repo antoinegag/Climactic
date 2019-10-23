@@ -1,10 +1,13 @@
-require("./db/sqlite");
+import "reflect-metadata";
 
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as logger from "morgan";
 import * as path from "path";
 import * as Listr from "listr";
+import { buildSchema } from "type-graphql";
+
+const { ApolloServer } = require("apollo-server-express");
 
 const env = process.env.NODE_ENV || "dev";
 const port = process.env.PORT;
@@ -22,6 +25,38 @@ const app = express();
 
 const tasks = new Listr([
   {
+    title: "Setting up SQLite",
+    task: () => {
+      require("./db/sqlite");
+    }
+  },
+  {
+    title: "Setup GraphQL server",
+    task: async () => {
+      let schema;
+      try {
+        schema = await buildSchema({
+          resolvers: [__dirname + "/**/*.resolver.ts"]
+        });
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+
+      // Create the GraphQL server
+      const server = new ApolloServer({
+        schema,
+        playground: {
+          settings: {
+            "editor.theme": "dark"
+          }
+        }
+      });
+
+      server.applyMiddleware({ app: app });
+    }
+  },
+  {
     title: "Setting up Express",
     task: () =>
       new Listr([
@@ -31,13 +66,6 @@ const tasks = new Listr([
             app.use(bodyParser.urlencoded({ extended: false }));
             app.use(bodyParser.json());
             app.use(logger("dev"));
-          }
-        },
-        {
-          title: "Registring API routes",
-          task: () => {
-            const apiRouter = require("./api/index");
-            app.use("/api", apiRouter);
           }
         },
         {
@@ -53,16 +81,16 @@ const tasks = new Listr([
               );
             });
           }
-        },
-        {
-          title: "Starting server",
-          task: () => {
-            app.listen(API_PORT, () =>
-              console.log(`Listening for HTTP request on port ${API_PORT}`)
-            );
-          }
         }
       ])
+  },
+  {
+    title: "Starting server",
+    task: async () => {
+      app.listen(API_PORT, () =>
+        console.log(`Listening for HTTP request on port ${API_PORT}`)
+      );
+    }
   }
 ]);
 

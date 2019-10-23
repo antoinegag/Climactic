@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "./built",
-    // "allowJs": true,
-    "target": "es5"
+    "target": "es2016",
+    "module": "commonjs",
+    "lib": ["es2016", "esnext.asynciterable"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "include": ["./server/**/*"],
-  "exclude": ["./server/node_modules"]
+  "exclude": ["./server/node_modules", "**/*.spec.ts"]
 }

@@ -13,4 +13,4 @@ const sqliteDatabase = new sqlite3.Database("./stations.db", err => {
   console.info("Connected to the stations database.");
 });
 
-module.exports = sqliteDatabase;
+export = sqliteDatabase;
