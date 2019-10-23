@@ -1,11 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Badge } from "reactstrap";
-import StationAPI from "../api/StationAPI";
+import { Container, Row } from "reactstrap";
+import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
+
+const BEEP_MUTATION = gql`
+  mutation beep($double: Boolean, $id: Float!) {
+    beep(double: $double, stationId: $id)
+  }
+`;
 
 const Station = props => {
   const { id, name, ip, status } = props.station;
   const { online, version } = status;
+  const [beep, { data }] = useMutation(BEEP_MUTATION);
 
   return (
     <Container>
@@ -32,11 +40,11 @@ const Station = props => {
       <Row className="justify-content-end">
         <i
           class="fa fa-bell cursor-pointer ml-2"
-          onClick={() => StationAPI.locate(id, true)}
+          onClick={() => beep({ variables: { id, double: true } })}
         />
         <i
           class="fa fa-cog cursor-pointer ml-2"
-          onClick={() => StationAPI.locate(id, true)}
+          onClick={() => beep({ variables: { id, double: true } })}
         />
       </Row>
     </Container>

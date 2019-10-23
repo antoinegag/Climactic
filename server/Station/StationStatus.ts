@@ -2,7 +2,7 @@ import { ObjectType, Field } from "type-graphql";
 
 @ObjectType()
 export class StationStatus {
-  @Field()
+  @Field({ nullable: true })
   version?: string;
 
   @Field()
