@@ -15,6 +15,7 @@ import {
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const UPDATE_MUTATION = gql`
   mutation updateStation($station: StationInput!) {
@@ -29,6 +30,7 @@ const EditStationForm = props => {
   const { onSubmit: handleSubmit, station } = props;
   const { id, name, ip } = station;
   const [update] = useMutation(UPDATE_MUTATION);
+  const history = useHistory();
 
   return (
     <Formik
@@ -49,6 +51,7 @@ const EditStationForm = props => {
           toast.error("Error saving toast configuration!");
         } else {
           toast.success("Station configuration saved!");
+          history.push("/stations/");
         }
         setSubmitting(false);
       }}
