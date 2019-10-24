@@ -18,7 +18,7 @@ const NavBar = props => {
   return (
     <div>
       <Navbar className="nav" color="dark" dark expand="md">
-        <NavbarBrand href="/" className="mr-auto">
+        <NavbarBrand tag={Link} to="/" className="mr-auto">
           <img alt="logo" height="32px" src="logo-96.png" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
