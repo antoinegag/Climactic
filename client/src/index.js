@@ -10,7 +10,21 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
-const client = new ApolloClient();
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: "cache-and-network",
+    errorPolicy: "ignore"
+  },
+  query: {
+    fetchPolicy: "network-only",
+    errorPolicy: "all"
+  },
+  mutate: {
+    errorPolicy: "all"
+  }
+};
+const client = new ApolloClient({});
+client.defaultOptions = defaultOptions;
 
 ReactDOM.render(
   <ApolloProvider client={client}>
