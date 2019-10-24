@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DataSummary from "../../components/DataSummary";
 import { Collapse, Row, Col } from "reactstrap";
+import BlankState from "../../components/NoStationsBlankState";
 
 function Overview(props) {
   const { stations } = props;
@@ -39,13 +40,17 @@ const Data = props => {
         </h5>
       </span>
       <Collapse isOpen={collapse}>
-        <Row className="justify-content-md-left">
-          {stations.map(station => (
-            <Col md="6" key={station.id}>
-              <DataSummary station={station} />
-            </Col>
-          ))}
-        </Row>
+        {stations.length === 0 ? (
+          <BlankState />
+        ) : (
+          <Row className="justify-content-md-left">
+            {stations.map(station => (
+              <Col md="6" key={station.id}>
+                <DataSummary station={station} />
+              </Col>
+            ))}
+          </Row>
+        )}
       </Collapse>
     </>
   );

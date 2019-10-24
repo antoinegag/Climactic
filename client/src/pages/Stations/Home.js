@@ -5,6 +5,7 @@ import { Spinner } from "reactstrap";
 import StationTable from "./StationTable";
 import PropTypes from "prop-types";
 import confirm from "reactstrap-confirm";
+import BlankState from "../../components/NoStationsBlankState";
 
 const STATIONS_QUERY = gql`
   {
@@ -51,6 +52,8 @@ const Home = props => {
     <div className="overflow-auto">
       {loading ? (
         <Spinner color="primary" />
+      ) : data.stations.length === 0 ? (
+        <BlankState />
       ) : (
         <StationTable stations={data.stations} onDelete={handleDelete} />
       )}
