@@ -21,6 +21,7 @@ const STATIONS_QUERY = gql`
 
 const Home = props => {
   const { loading, error, data } = useQuery(STATIONS_QUERY);
+
   return (
     <div className="overflow-auto">
       {loading ? (

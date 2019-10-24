@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { Spinner, Row } from "reactstrap";
 
-import Stations from "./Stations";
 import Data from "./Data";
 
 const DASHBOARD_QUERY = gql`
@@ -41,7 +40,6 @@ const Dashboard = props => {
       ) : (
         <>
           <Data stations={data.stations} />
-          <Stations stations={data.stations} />
         </>
       )}
     </div>

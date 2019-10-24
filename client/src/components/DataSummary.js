@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Table } from "reactstrap";
+import { Table, Badge, Button } from "reactstrap";
 import Plot from "react-plotly.js";
 
 const randomData = (max, min) => {
@@ -46,24 +46,37 @@ function DataPlot() {
 }
 
 const DataSummary = props => {
-  const { name, data } = props.station;
+  const { id, name, ip, data, status } = props.station;
 
   return (
     <div className="border px-4 py-2 my-2">
-      <h4>{name} </h4>
+      <h4>
+        {name} <small className="text-muted">{ip}</small>
+        <span className="float-right">
+          <Badge color={status.online ? "success" : "danger"}>
+            {status.online ? "Online" : "Offline"}
+          </Badge>
+        </span>
+      </h4>
       <Table>
         <thead>
-          <th>Temperature</th>
-          <th>Humidity</th>
-          <th>Pressure</th>
+          <tr>
+            <th>Temperature</th>
+            <th>Humidity</th>
+            <th>Pressure</th>
+          </tr>
         </thead>
         <tbody>
-          <th>{data ? data.temp : "?"} &deg;C</th>
-          <th>{data ? data.humidity : "?"} %</th>
-          <th>{data ? data.pressure : "?"} pa</th>
+          <tr>
+            <td>{data ? data.temp : "?"} &deg;C</td>
+            <td>{data ? data.humidity : "?"} %</td>
+            <td>{data ? data.pressure : "?"} pa</td>
+          </tr>
         </tbody>
       </Table>
-      {/* <DataPlot /> */}
+      <span className="text-muted">
+        v.{status.version ? status.version : " ?"}
+      </span>
     </div>
   );
 };
@@ -72,11 +85,16 @@ DataSummary.propTypes = {
   station: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    ip: PropTypes.string.isRequired,
     data: PropTypes.shape({
       temp: PropTypes.number.isRequired,
       humidity: PropTypes.number.isRequired,
       pressure: PropTypes.number.isRequired
-    })
+    }),
+    status: PropTypes.shape({
+      online: PropTypes.bool.isRequired,
+      version: PropTypes.string
+    }).isRequired
   }).isRequired
 };
 export default DataSummary;

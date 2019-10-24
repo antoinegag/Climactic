@@ -24,6 +24,7 @@ const STATION_QUERY = gql`
 const Edit = props => {
   const { params } = useRouteMatch();
   const { id } = params;
+
   const { data, loading } = useQuery(STATION_QUERY, {
     variables: { id: parseInt(id) }
   });
