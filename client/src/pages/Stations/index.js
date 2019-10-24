@@ -3,6 +3,7 @@ import React from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import Home from "./Home";
 import Edit from "./Edit";
+import Register from "./Register";
 
 const Stations = props => {
   let { path, url } = useRouteMatch();
@@ -16,6 +17,7 @@ const Stations = props => {
       <Switch>
         <Route exact path={path} component={Home}></Route>
         <Route path={`${path}/edit/:id`} component={Edit}></Route>
+        <Route path={`${path}/register`} component={Register}></Route>
       </Switch>
     </>
   );

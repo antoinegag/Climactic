@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Table, Button } from "reactstrap";
+import confirm from "reactstrap-confirm";
 
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
@@ -13,18 +14,8 @@ const BEEP_MUTATION = gql`
   }
 `;
 
-const DELETE_MUTATION = gql`
-  mutation deleteStation($id: Float!) {
-    deleteStation(id: $id) {
-      success
-      error
-    }
-  }
-`;
-
 const StationTable = props => {
   const [beep, { beepData }] = useMutation(BEEP_MUTATION);
-  const [remove, { removeData }] = useMutation(DELETE_MUTATION);
 
   return (
     <Table>
@@ -34,7 +25,11 @@ const StationTable = props => {
           <th>Status</th>
           <th>IP</th>
           <th>Version</th>
-          <th></th>
+          <th style={{ textAlign: "right" }}>
+            <Button color="success" tag={Link} to={`/stations/register/`}>
+              <i className="fas fa-plus" />
+            </Button>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -65,7 +60,13 @@ const StationTable = props => {
               >
                 <i className="fas fa-bell" />
               </Button>
-              <Button color="danger" className="ml-md-2">
+              <Button
+                onClick={() => {
+                  props.onDelete(station.id, station.name);
+                }}
+                color="danger"
+                className="ml-md-2"
+              >
                 <i className="fas fa-times" />
               </Button>
               <Button
@@ -85,6 +86,7 @@ const StationTable = props => {
 };
 
 StationTable.propTypes = {
+  onDelete: PropTypes.func.isRequired,
   stations: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

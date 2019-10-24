@@ -1,7 +1,6 @@
 // Render Prop
 import React from "react";
 import { Formik } from "formik";
-import PropTypes from "prop-types";
 import {
   Col,
   Button,
@@ -17,40 +16,35 @@ import { useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-const UPDATE_MUTATION = gql`
-  mutation updateStation($station: StationInput!) {
-    updateStation(station: $station) {
+const REGISTER_MUTATION = gql`
+  mutation registerStation($ip: String!, $name: String!) {
+    registerStation(ip: $ip, name: $name) {
       success
       error
     }
   }
 `;
 
-const EditStationForm = props => {
-  const { onSubmit: handleSubmit, station } = props;
-  const { id, name, ip } = station;
-  const [update] = useMutation(UPDATE_MUTATION);
+const RegisterStationForm = props => {
+  const [register] = useMutation(REGISTER_MUTATION);
   const history = useHistory();
 
   return (
     <Formik
-      initialValues={{ name, ip }}
+      initialValues={{ name: "", ip: "" }}
       onSubmit={async (values, { setSubmitting, setFieldError }) => {
-        const res = await update({
+        const res = await register({
           variables: {
-            station: {
-              id: id,
-              ip: values.ip,
-              name: values.name
-            }
+            ip: values.ip,
+            name: values.name
           }
         });
-        const { error, success } = res.data.updateStation;
+        const { error, success } = res.data.registerStation;
         if (!success) {
           setFieldError("error", error);
-          toast.error("Error saving toast configuration!");
+          toast.error("Error registering station!");
         } else {
-          toast.success("Station configuration saved!");
+          toast.success("Station registration success!");
           history.push("/stations/");
         }
         setSubmitting(false);
@@ -90,7 +84,7 @@ const EditStationForm = props => {
             </Col>
           </Row>
           <Button type="submit" color="primary" disabled={isSubmitting}>
-            Save
+            Register
           </Button>
         </Form>
       )}
@@ -98,12 +92,4 @@ const EditStationForm = props => {
   );
 };
 
-EditStationForm.propTypes = {
-  station: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    ip: PropTypes.string.isRequired
-  }).isRequired
-};
-
-export default EditStationForm;
+export default RegisterStationForm;

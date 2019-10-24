@@ -7819,6 +7819,11 @@ lodash._reinterpolate@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
 
+lodash.defaults@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
+  integrity sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -10664,6 +10669,13 @@ react@^16.10.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
+
+reactstrap-confirm@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/reactstrap-confirm/-/reactstrap-confirm-1.2.0.tgz#aa9fec38f6d7536f4e68249e6e11bedac663ed44"
+  integrity sha512-lPN456QW604lZ2xwVKQ4gLNqI7mdDTMZE8ulQ3eAKznd/EJegWq2rv+IplLLVI+dL6IKv0jy+elqIFzNVxbEqA==
+  dependencies:
+    lodash.defaults "^4.2.0"
 
 reactstrap@^8.1.1:
   version "8.1.1"

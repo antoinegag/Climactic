@@ -3,7 +3,6 @@ import Station from "./Station";
 import StationManager from "./StationManager";
 import RegisterStationInput from "./RegisterStationInput";
 import IOperationSuccessResponse from "./IOperationSuccessResponse";
-import RegisterStationResponse from "./StationOperationResponse";
 import OperationSuccessResponse from "./OperationSuccessResponse";
 import StationInput from "./StationInput";
 import StationOperationResponse from "./StationOperationResponse";
@@ -97,17 +96,17 @@ class StationResolver {
     return { success: true } as OperationSuccessResponse;
   }
 
-  @Mutation(type => RegisterStationResponse)
-  async registerStation(@Arg("station") station: RegisterStationInput) {
+  @Mutation(type => StationOperationResponse)
+  async registerStation(@Arg("ip") ip: string, @Arg("name") name: string) {
     let newStation;
     try {
-      newStation = await StationManager.register(station.ip, station.name);
+      newStation = await StationManager.register(ip, name);
     } catch (error) {
       return {
         success: false,
         error: error.message
-      } as RegisterStationResponse;
+      } as StationOperationResponse;
     }
-    return { success: true, station: newStation } as RegisterStationResponse;
+    return { success: true, station: newStation } as StationOperationResponse;
   }
 }
