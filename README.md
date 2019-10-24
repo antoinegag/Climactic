@@ -12,7 +12,7 @@
     <!-- <a href="https://github.com/antoinegag/climactic"><strong>Explore the docs »</strong></a>
     <br /> -->
     <br />
-    <a href="https://github.com/antoinegag/climactic">View Demo</a>
+    <a href="https://www.youtube.com/watch?v=fq074l-mFFE">View Demo</a>
     ·
     <a href="https://github.com/antoinegag/climactic/issues">Report Bugs</a>
     ·
