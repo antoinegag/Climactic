@@ -51,21 +51,26 @@ Read more about them at [antoinegag/climactic-stations](https://github.com/antoi
 
 ### Built With
 
-`// TODO`
-
-- []()
+- [NodeJS](https://nodejs.org/en/)
+- [React](https://reactjs.org/)
+- [SQLite](https://www.sqlite.org/index.html)
+- [TypeScript](https://www.typescriptlang.org/)
+- [GraphQL](https://graphql.org/) and [Apollo GraphQL](https://www.apollographql.com/)
+- [Express](https://expressjs.com/)
+- [reactstrap](https://reactstrap.github.io/)
+- [Font Awesome](https://fontawesome.com)
+- [Formik](https://jaredpalmer.com/formik/)
+- ... and more!
 
 ## Getting Started
+
+**WARNING: this project is still in early development phase, if you want to work on it consider contacting me first by opening an issue or on twitter @antoinegag_dev**
 
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
 - Yarn or NPM
-
-`// TODO`
 
 ### Installation
 
@@ -75,7 +80,23 @@ This is an example of how to list things you need to use the software and how to
 git clone https:://github.com/antoinegag/climactic.git
 ```
 
-`// TODO`
+2. Install the dependencies
+
+Since we have two modules here, you will need to go into both and install the deps.
+
+You can run this command to download all packages
+
+```sh
+yarn && cd client && yarn && cd ../server && yarn && cd ..
+```
+
+or if you use npm
+
+```sh
+npm i && cd client && npm i && cd ../server && npm i && cd ..
+```
+
+3. Start the server with `yarn dev` or `npm run dev`
 
 ## License
 
