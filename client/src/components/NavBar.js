@@ -25,22 +25,19 @@ const NavBar = props => {
         <Collapse isOpen={isOpen} navbar>
           <Nav>
             <NavLink tag={Link} className="text-white" to="/">
-              <i className="fa fa-tachometer" /> Dashboard
+              <i className="fas fa-tachometer-alt" /> Dashboard
             </NavLink>
-            <NavLink tag={Link} className="text-white" to="/stats">
-              <i className="fa fa-thermometer-three-quarters" /> Statistics
+            <NavLink tag={Link} className="text-white" to="/stations">
+              <i className="fas fa-thermometer-three-quarters" /> Stations
             </NavLink>
             <NavLink tag={Link} className="text-white" to="/settings">
-              <i className="fa fa-cog" /> Settings
+              <i className="fas fa-cog" /> Settings
             </NavLink>
           </Nav>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink
-                target="_blank"
-                href="//github.com/antoinegag/random-image-bot"
-              >
-                <i className="fa fa-2x fa-github" />
+              <NavLink target="_blank" href="//github.com/antoinegag/climactic">
+                <i className="fab fa-2x fa-github" />
               </NavLink>
             </NavItem>
           </Nav>

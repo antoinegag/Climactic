@@ -9,8 +9,12 @@ export default class StationInput implements Partial<Station> {
   @Field({ name: "id" })
   _id: number;
 
-  public getId(): number {
+  public get id(): number {
     return this._id;
+  }
+
+  public set id(id: number) {
+    this._id = id;
   }
 
   @Field({ name: "ip", nullable: true })

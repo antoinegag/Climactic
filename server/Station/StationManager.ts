@@ -70,6 +70,24 @@ export default class StationManager {
     });
   }
 
+  static async update(id: number, ip: string, name: string) {
+    if (!ip.startsWith("localhost") && !isValidIPv4(ip)) {
+      throw new Error("Invalid IP");
+    }
+    return new Promise((resolve, reject) => {
+      const stmt = db.prepare(
+        "UPDATE stations SET ip = ?, name = ? WHERE id = ?"
+      );
+      stmt.run(ip, name, id, function(err, result) {
+        if (err) reject(err);
+        else {
+          resolve(StationManager.get(id));
+        }
+      });
+      stmt.finalize();
+    });
+  }
+
   static async add(ip: string, name: string) {
     return new Promise((resolve, reject) => {
       const stmt = db.prepare("INSERT INTO stations (ip, name) VALUES (?, ?)");

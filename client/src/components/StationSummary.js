@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row } from "reactstrap";
+import { Container, Row, Button } from "reactstrap";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
+import { toast } from "react-toastify";
 
 const BEEP_MUTATION = gql`
   mutation beep($double: Boolean, $id: Float!) {
@@ -10,13 +11,13 @@ const BEEP_MUTATION = gql`
   }
 `;
 
-const Station = props => {
+const StationSummary = props => {
   const { id, name, ip, status } = props.station;
   const { online, version } = status;
   const [beep, { data }] = useMutation(BEEP_MUTATION);
 
   return (
-    <Container>
+    <div className="border px-4 py-2 my-2">
       <Row>
         <h4>{name} </h4>
       </Row>
@@ -25,33 +26,34 @@ const Station = props => {
         <div className={online ? "text-success" : "text-danger"}>
           {online ? (
             <span className="ml-1">
-              Online <i className="fa fa-check" />
+              Online <i className="fas fa-check" />
             </span>
           ) : (
             <span className="ml-1">
-              Offline <i className="fa fa-times" />
+              Offline <i className="fas fa-times" />
             </span>
           )}
         </div>
       </Row>
       <Row>
-        {ip} - v.{version ? version : "Unknown"}
+        {ip} - v.{version ? version : " ?"}
       </Row>
       <Row className="justify-content-end">
-        <i
-          class="fa fa-bell cursor-pointer ml-2"
-          onClick={() => beep({ variables: { id, double: true } })}
-        />
-        <i
-          class="fa fa-cog cursor-pointer ml-2"
-          onClick={() => beep({ variables: { id, double: true } })}
-        />
+        <Button
+          color="info"
+          onClick={() => {
+            beep({ variables: { id, double: true } });
+            toast.info(`Rang station ${name}`);
+          }}
+        >
+          <i className="fa fa-bell" />
+        </Button>
       </Row>
-    </Container>
+    </div>
   );
 };
 
-Station.propTypes = {
+StationSummary.propTypes = {
   station: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -63,4 +65,4 @@ Station.propTypes = {
   }).isRequired
 };
 
-export default Station;
+export default StationSummary;

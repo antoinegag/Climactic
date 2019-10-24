@@ -5,7 +5,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "font-awesome/css/font-awesome.min.css";
+// import "font-awesome/css/font-awesome.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";

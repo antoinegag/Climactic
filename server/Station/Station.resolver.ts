@@ -66,6 +66,24 @@ class StationResolver {
     return { success: true, station: station } as StationOperationResponse;
   }
 
+  @Mutation(type => StationOperationResponse)
+  async updateStation(@Arg("station") station: StationInput) {
+    let newStation;
+    try {
+      newStation = await StationManager.update(
+        station.id,
+        station.ip,
+        station.name
+      );
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      } as StationOperationResponse;
+    }
+    return { success: true, station: newStation } as StationOperationResponse;
+  }
+
   @Mutation(type => OperationSuccessResponse)
   async deleteStation(@Arg("id") id: number) {
     try {
@@ -84,7 +102,6 @@ class StationResolver {
     let newStation;
     try {
       newStation = await StationManager.register(station.ip, station.name);
-      console.log(newStation);
     } catch (error) {
       return {
         success: false,
