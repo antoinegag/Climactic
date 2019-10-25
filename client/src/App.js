@@ -19,9 +19,11 @@ function App() {
       <BrowserRouter>
         <EventNotifier>
           <NavBar />
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/stats" component={Stats} />
-          <Route path="/stations" component={Stations} />
+          <div className="my-3">
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/stats" component={Stats} />
+            <Route path="/stations" component={Stations} />
+          </div>
           <ToastContainer />
         </EventNotifier>
       </BrowserRouter>
