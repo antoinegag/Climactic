@@ -12,7 +12,7 @@
     <!-- <a href="https://github.com/antoinegag/climactic"><strong>Explore the docs »</strong></a>
     <br /> -->
     <br />
-    <a target="_blank" href="https://www.youtube.com/watch?v=fq074l-mFFE">View Demo</a>
+    <a target="_blank" href="https://www.youtube.com/watch?v=FZ1Q37gA1m8">View Demo</a>
     ·
     <a href="https://github.com/antoinegag/climactic/issues">Report Bugs</a>
     ·
@@ -23,8 +23,9 @@
 ## Table of Contents
 
 - [About the Project](#about-the-project)
-  - [Built With](#built-with)
+  - [Features](#features)
   - [Stations](#stations)
+  - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -34,6 +35,23 @@
 ## About The Project
 
 Climactic is a system that lets you monitor real time environmental data from "stations" anywhere on your network as well as visualize historical data and statistics.
+
+### Features
+
+Climactic is still in early beta features might change at any time
+
+#### Current features
+
+- Automatic device discovery
+- Desktop/Mobile Web Application
+  - View station data
+  - Manage stations
+
+#### Planned features
+
+- Data collection
+- Statistic generation
+- Data visualization (graphs, etc)
 
 ### Stations
 
