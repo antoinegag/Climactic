@@ -112,11 +112,11 @@ export default class StationManager {
       const stmt = db.prepare(
         "INSERT INTO stations (ip, name, confirmed) VALUES (?, ?, ?)"
       );
-      stmt.run(ip, name, function(err, result: StationEntry) {
+      stmt.run(ip, name, confirmed, function(err, result: StationEntry) {
         if (err) reject(err);
         else {
           // @ts-ignore
-          resolve(create({ id: this.lastID, ip, name }));
+          resolve(create({ id: this.lastID, ip, name, confirmed }));
         }
       });
       stmt.finalize();
@@ -157,6 +157,6 @@ export default class StationManager {
 
     await nfetch(`${stationUrl}/beep`, { method: "POST" });
 
-    return StationManager.add(ip, name);
+    return StationManager.add(ip, name, confirmed);
   }
 }

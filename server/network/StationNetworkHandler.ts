@@ -68,7 +68,8 @@ export default class StationNetworkHandler extends EventEmitter {
     if (!(await StationManager.findByIP(rinfo.address))) {
       StationManager.register(
         rinfo.address,
-        `Unknown station ${StationManager.generateRandomTag()}`
+        `Unknown station ${StationManager.generateRandomTag()}`,
+        false
       );
     }
 
