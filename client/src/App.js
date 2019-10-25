@@ -19,11 +19,9 @@ function App() {
       <BrowserRouter>
         <EventNotifier>
           <NavBar />
-          <Container fluid className="pt-2">
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/stats" component={Stats} />
-            <Route path="/stations" component={Stations} />
-          </Container>
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/stats" component={Stats} />
+          <Route path="/stations" component={Stations} />
           <ToastContainer />
         </EventNotifier>
       </BrowserRouter>

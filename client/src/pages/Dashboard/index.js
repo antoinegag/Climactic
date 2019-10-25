@@ -2,7 +2,7 @@ import React from "react";
 
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { Spinner, Row } from "reactstrap";
+import { Spinner, Row, Container } from "reactstrap";
 
 import Data from "./Data";
 
@@ -31,7 +31,7 @@ const Dashboard = props => {
   const { loading, error, data } = useQuery(DASHBOARD_QUERY);
 
   return (
-    <div>
+    <Container fluid>
       <h1 className="text-center">
         <i className="fas fa-tachometer-alt" /> Dashboard
       </h1>
@@ -43,7 +43,7 @@ const Dashboard = props => {
           <Data stations={data.stations} />
         </>
       )}
-    </div>
+    </Container>
   );
 };
 

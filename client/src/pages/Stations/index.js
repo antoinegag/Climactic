@@ -1,6 +1,8 @@
 import React from "react";
 
 import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Container } from "reactstrap";
+
 import Home from "./Home";
 import Edit from "./Edit";
 import Register from "./Register";
@@ -9,7 +11,7 @@ const Stations = props => {
   let { path, url } = useRouteMatch();
 
   return (
-    <>
+    <Container>
       <h1 className="text-center">
         <i className="fa fa-thermometer-three-quarters" /> Stations
       </h1>
@@ -19,7 +21,7 @@ const Stations = props => {
         <Route path={`${path}/edit/:id`} component={Edit}></Route>
         <Route path={`${path}/register`} component={Register}></Route>
       </Switch>
-    </>
+    </Container>
   );
 };
 
