@@ -12,7 +12,6 @@ const RegistredStations = props => {
       ) : (
         <StationTable
           stations={props.stations}
-          showAdd={false}
           onAdd={props.onAdd}
           onDelete={props.onDelete}
         />

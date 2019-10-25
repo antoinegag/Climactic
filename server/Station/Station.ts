@@ -1,7 +1,7 @@
 import { isValidIPv4 } from "../helpers/formatHelper";
 import { EnvironmentData } from "./EnvironmentData";
 import { StationStatus } from "./StationStatus";
-import fetch, { Response } from "node-fetch";
+import fetch, { Response, RequestInit } from "node-fetch";
 
 import { ObjectType, Field } from "type-graphql";
 
@@ -55,8 +55,8 @@ export default class Station {
     return this._url;
   }
 
-  private async query(path: string): Promise<Response> {
-    return fetch(`${this._url}/${path}`);
+  private async query(path: string, options?: RequestInit): Promise<Response> {
+    return fetch(`${this._url}/${path}`, options);
   }
 
   private async post(path: string, body?: any): Promise<Response> {
