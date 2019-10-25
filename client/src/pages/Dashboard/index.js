@@ -8,10 +8,11 @@ import Data from "./Data";
 
 const DASHBOARD_QUERY = gql`
   {
-    stations {
+    stations(confirmed: true) {
       id
       name
       ip
+      confirmed
       status {
         online
         version

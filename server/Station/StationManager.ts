@@ -11,11 +11,15 @@ interface StationEntry {
   name: string;
   confirmed: boolean;
 }
+interface StationFilter {
+  confirmed: boolean;
+}
 
 function create(entry: StationEntry) {
   return new Station(entry.id, entry.ip, entry.name, entry.confirmed);
 }
 
+// TODO: Replace all that stuff with TypeORM
 export default class StationManager {
   static generateRandomTag() {
     return "#" + ((Math.random() * 0xffff) << 0).toString(16).toUpperCase();
@@ -49,14 +53,25 @@ export default class StationManager {
     });
   }
 
-  public static async list(): Promise<Array<Station>> {
+  public static async list(filter?: StationFilter): Promise<Array<Station>> {
     return new Promise((resolve, reject) => {
-      db.all("SELECT * FROM stations", (err, rows: Array<StationEntry>) => {
+      const callback = (err, rows: Array<StationEntry>) => {
         if (err) reject(err);
         else {
           resolve(rows.map(row => create(row)));
         }
-      });
+      };
+
+      if (filter) {
+        if (filter.confirmed) {
+          db.all("SELECT * FROM stations WHERE confirmed = 1", callback);
+          return;
+        } else if (filter.confirmed === false) {
+          db.all("SELECT * FROM stations WHERE confirmed = 0", callback);
+          return;
+        }
+      }
+      db.all("SELECT * FROM stations", callback);
     });
   }
 
@@ -64,6 +79,19 @@ export default class StationManager {
     return new Promise((resolve, reject) => {
       const stmt = db.prepare("UPDATE stations SET name = ? WHERE id = ?");
       stmt.run(name, id, function(err, result) {
+        if (err) reject(err);
+        else {
+          resolve(StationManager.get(id));
+        }
+      });
+      stmt.finalize();
+    });
+  }
+
+  static async confirm(id: number) {
+    return new Promise((resolve, reject) => {
+      const stmt = db.prepare("UPDATE stations SET confirmed = 1 WHERE id = ?");
+      stmt.run(id, function(err, result) {
         if (err) reject(err);
         else {
           resolve(StationManager.get(id));

@@ -26,9 +26,11 @@ const StationTable = props => {
           <th>IP</th>
           <th>Version</th>
           <th style={{ textAlign: "right" }}>
-            <Button color="success" tag={Link} to={`/stations/register/`}>
-              <i className="fas fa-plus" />
-            </Button>
+            {props.showAdd && (
+              <Button color="success" tag={Link} to={`/stations/register/`}>
+                <i className="fas fa-plus" />
+              </Button>
+            )}
           </th>
         </tr>
       </thead>
@@ -52,31 +54,42 @@ const StationTable = props => {
               {station.status.version ? station.status.version : "Unknown"}
             </td>
             <td style={{ textAlign: "right" }}>
-              <Button
-                onClick={() =>
-                  beep({ variables: { id: station.id, double: true } })
-                }
-                color="info"
-              >
-                <i className="fas fa-bell" />
-              </Button>
-              <Button
-                onClick={() => {
-                  props.onDelete(station.id, station.name);
-                }}
-                color="danger"
-                className="ml-md-2"
-              >
-                <i className="fas fa-times" />
-              </Button>
-              <Button
-                tag={Link}
-                to={`/stations/edit/${station.id}`}
-                className="ml-md-2"
-                color="primary"
-              >
-                <i className="fas fa-cog" />
-              </Button>
+              {!station.confirmed ? (
+                <Button
+                  onClick={() => props.onAdd(station.id, station.name)}
+                  color="success"
+                >
+                  <i className="fas fa-plus" /> Add
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    onClick={() =>
+                      beep({ variables: { id: station.id, double: true } })
+                    }
+                    color="info"
+                  >
+                    <i className="fas fa-bell" />
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      props.onDelete(station.id, station.name);
+                    }}
+                    color="danger"
+                    className="ml-md-2"
+                  >
+                    <i className="fas fa-times" />
+                  </Button>
+                  <Button
+                    tag={Link}
+                    to={`/stations/edit/${station.id}`}
+                    className="ml-md-2"
+                    color="primary"
+                  >
+                    <i className="fas fa-cog" />
+                  </Button>
+                </>
+              )}
             </td>
           </tr>
         ))}
@@ -85,7 +98,14 @@ const StationTable = props => {
   );
 };
 
+StationTable.defaultProps = {
+  showAdd: true,
+  onAdd: () => {} // no-op
+};
+
 StationTable.propTypes = {
+  onAdd: PropTypes.func,
+  showAdd: PropTypes.bool,
   onDelete: PropTypes.func.isRequired,
   stations: PropTypes.arrayOf(
     PropTypes.shape({

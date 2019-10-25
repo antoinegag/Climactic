@@ -6,6 +6,9 @@ import StationTable from "./StationTable";
 import PropTypes from "prop-types";
 import confirm from "reactstrap-confirm";
 import BlankState from "../../components/NoStationsBlankState";
+import { toast } from "react-toastify";
+import AvailableStations from "./AvailableStations";
+import RegistredStations from "./RegistredStations";
 
 const STATIONS_QUERY = gql`
   {
@@ -13,6 +16,7 @@ const STATIONS_QUERY = gql`
       id
       name
       ip
+      confirmed
       status {
         online
         version
@@ -30,9 +34,19 @@ const DELETE_MUTATION = gql`
   }
 `;
 
+const CONFIRM_MUTATION = gql`
+  mutation confirm($id: Float!) {
+    confirmStation(id: $id) {
+      error
+      success
+    }
+  }
+`;
+
 const Home = props => {
   const { loading, error, data, refetch } = useQuery(STATIONS_QUERY);
   const [remove, { removeData }] = useMutation(DELETE_MUTATION);
+  const [confirmStation, { confirmData }] = useMutation(CONFIRM_MUTATION);
 
   const handleDelete = async (id, name) => {
     if (
@@ -48,15 +62,41 @@ const Home = props => {
     }
   };
 
+  const handleAdd = async (id, name) => {
+    if (
+      await confirm({
+        title: `Add ${name} ?`,
+        message: "This device will be able to interact with the system",
+        confirmText: "Add",
+        confirmColor: "success"
+      })
+    ) {
+      const res = await confirmStation({ variables: { id: id } });
+      console.log(res);
+      const { success, error } = res.data.confirmStation;
+      if (!success) {
+        toast.error("Error adding station: " + error);
+      } else {
+        toast.success(`Successfully added ${name}!`);
+        refetch();
+      }
+    }
+  };
+
+  if (loading) return <Spinner color="primary" />;
+
+  const confirmed = data.stations.filter(station => station.confirmed);
+  const available = data.stations.filter(station => !station.confirmed);
+
   return (
     <div className="overflow-auto">
-      {loading ? (
-        <Spinner color="primary" />
-      ) : data.stations.length === 0 ? (
-        <BlankState />
-      ) : (
-        <StationTable stations={data.stations} onDelete={handleDelete} />
-      )}
+      <RegistredStations stations={confirmed} onDelete={handleDelete} />
+
+      <AvailableStations
+        stations={available}
+        showAdd={false}
+        onAdd={handleAdd}
+      />
     </div>
   );
 };

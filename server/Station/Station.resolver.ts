@@ -19,8 +19,11 @@ class StationResolver {
   }
 
   @Query(returns => [Station])
-  async stations(@Arg("status", { nullable: true }) status: boolean) {
-    const stations = StationManager.list();
+  async stations(
+    @Arg("confirmed", { nullable: true })
+    confirmed: boolean
+  ) {
+    const stations = StationManager.list({ confirmed });
 
     return stations;
   }
@@ -42,6 +45,20 @@ class StationResolver {
     let station;
     try {
       station = await StationManager.rename(id, name);
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      } as StationOperationResponse;
+    }
+    return { success: true, station: station } as StationOperationResponse;
+  }
+
+  @Mutation(type => StationOperationResponse)
+  async confirmStation(@Arg("id") id: number) {
+    let station;
+    try {
+      station = await StationManager.confirm(id);
     } catch (error) {
       return {
         success: false,
