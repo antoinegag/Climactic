@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
+import { WSProvider } from "./hooks/useWS/WSProvider";
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: "cache-and-network",
@@ -26,10 +27,17 @@ const defaultOptions = {
 const client = new ApolloClient({});
 client.defaultOptions = defaultOptions;
 
+const wsUrl = new URL("/ws", window.location.href);
+wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
+wsUrl.port = 8080;
+const ws = new WebSocket(wsUrl);
+
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <WSProvider client={ws}>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </WSProvider>,
   document.getElementById("root")
 );
 

@@ -2,6 +2,7 @@ import { Socket, createSocket, RemoteInfo } from "dgram";
 import { EventEmitter } from "events";
 import { AddressInfo } from "net";
 import StationManager from "../Station/StationManager";
+import WebSocketHandler from "./WebSocketHandler";
 
 const MESSAGES = {
   DISCOVERY_REQUEST: "D",
@@ -66,11 +67,12 @@ export default class StationNetworkHandler extends EventEmitter {
   async handleDiscoverRequest(rinfo: RemoteInfo) {
     // New station
     if (!(await StationManager.findByIP(rinfo.address))) {
-      StationManager.register(
+      await StationManager.register(
         rinfo.address,
         `Unknown station ${StationManager.generateRandomTag()}`,
         false
       );
+      WebSocketHandler.broadcastEvent("discover");
     }
 
     this.discoveryReply(rinfo);

@@ -72,7 +72,6 @@ const Home = props => {
       })
     ) {
       const res = await confirmStation({ variables: { id: id } });
-      console.log(res);
       const { success, error } = res.data.confirmStation;
       if (!success) {
         toast.error("Error adding station: " + error);

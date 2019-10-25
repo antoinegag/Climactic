@@ -7,6 +7,7 @@ import * as path from "path";
 import * as Listr from "listr";
 import { buildSchema } from "type-graphql";
 import StationNetworkHandler from "./network/StationNetworkHandler";
+import WebSocketHandler from "./network/WebSocketHandler";
 
 const { ApolloServer } = require("apollo-server-express");
 
@@ -89,6 +90,12 @@ const tasks = new Listr([
     title: "Starting Network handler",
     task: async () => {
       await StationNetworkHandler.start(2390);
+    }
+  },
+  {
+    title: "Setting up Web Socket server",
+    task: async () => {
+      WebSocketHandler.init();
     }
   },
   {
