@@ -66,7 +66,6 @@ export default class StationNetworkHandler extends EventEmitter {
   async handleDiscoverRequest(rinfo: RemoteInfo) {
     // New station
     if (!(await StationManager.findByIP(rinfo.address))) {
-      console.log("New");
       StationManager.register(
         rinfo.address,
         `Unknown station ${StationManager.generateRandomTag()}`
