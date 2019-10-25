@@ -7,7 +7,7 @@ const sqliteDatabase = new sqlite3.Database("./stations.db", err => {
   }
 
   sqliteDatabase.run(
-    "CREATE TABLE IF NOT EXISTS stations (id INTEGER PRIMARY KEY, ip varchar(16), name TEXT);"
+    "CREATE TABLE IF NOT EXISTS stations (id INTEGER PRIMARY KEY, ip varchar(16), name TEXT, confirmed bool);"
   );
 
   console.info("Connected to the stations database.");

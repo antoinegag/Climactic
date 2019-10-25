@@ -6,6 +6,7 @@ import * as logger from "morgan";
 import * as path from "path";
 import * as Listr from "listr";
 import { buildSchema } from "type-graphql";
+import StationNetworkHandler from "./network/StationNetworkHandler";
 
 const { ApolloServer } = require("apollo-server-express");
 
@@ -31,7 +32,7 @@ const tasks = new Listr([
     }
   },
   {
-    title: "Setup GraphQL server",
+    title: "Setting up GraphQL server",
     task: async () => {
       let schema;
       try {
@@ -83,6 +84,12 @@ const tasks = new Listr([
           }
         }
       ])
+  },
+  {
+    title: "Starting Network handler",
+    task: async () => {
+      await StationNetworkHandler.start(2390);
+    }
   },
   {
     title: "Starting server",

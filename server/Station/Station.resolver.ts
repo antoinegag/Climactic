@@ -11,7 +11,7 @@ import StationOperationResponse from "./StationOperationResponse";
 class StationResolver {
   constructor(private stationManager: StationManager) {}
 
-  @Query(returns => Station)
+  @Query(returns => Station, { nullable: true })
   async station(@Arg("id") id: number) {
     const station = StationManager.get(id);
 

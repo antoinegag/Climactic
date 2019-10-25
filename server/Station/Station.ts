@@ -19,14 +19,18 @@ export default class Station {
   @Field({ name: "url" })
   private _url: string;
 
+  @Field()
+  private confirmed: boolean;
+
   private static baseUrl(ip): string {
     return `http://${ip}`;
   }
 
-  constructor(id: number, ip: string, name: string) {
+  constructor(id: number, ip: string, name: string, confirmed: boolean) {
     this._id = id;
     this.ip = ip;
     this.name = name;
+    this.confirmed = confirmed;
 
     this._url = Station.baseUrl(ip);
   }

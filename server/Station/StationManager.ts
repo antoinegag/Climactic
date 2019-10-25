@@ -9,21 +9,40 @@ interface StationEntry {
   id: number;
   ip: string;
   name: string;
+  confirmed: boolean;
 }
 
 function create(entry: StationEntry) {
-  return new Station(entry.id, entry.ip, entry.name);
+  return new Station(entry.id, entry.ip, entry.name, entry.confirmed);
 }
 
 export default class StationManager {
-  static async get(id: number): Promise<Station> {
+  static generateRandomTag() {
+    return "#" + ((Math.random() * 0xffff) << 0).toString(16).toUpperCase();
+  }
+
+  static async get(id: number): Promise<Station | undefined> {
     return new Promise((resolve, reject) => {
       const stmt = db.prepare("SELECT * FROM stations WHERE id = ?");
       stmt.get(id, (err, result: StationEntry) => {
         if (err) {
           reject(err);
         } else {
-          resolve(create(result));
+          resolve(result ? create(result) : undefined);
+        }
+      });
+      stmt.finalize();
+    });
+  }
+
+  static async findByIP(ip: string): Promise<Station> {
+    return new Promise((resolve, reject) => {
+      const stmt = db.prepare("SELECT * FROM stations WHERE ip = ?");
+      stmt.get(ip, (err, result: StationEntry) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result ? create(result) : undefined);
         }
       });
       stmt.finalize();
@@ -88,9 +107,11 @@ export default class StationManager {
     });
   }
 
-  static async add(ip: string, name: string) {
+  static async add(ip: string, name: string, confirmed = true) {
     return new Promise((resolve, reject) => {
-      const stmt = db.prepare("INSERT INTO stations (ip, name) VALUES (?, ?)");
+      const stmt = db.prepare(
+        "INSERT INTO stations (ip, name, confirmed) VALUES (?, ?, ?)"
+      );
       stmt.run(ip, name, function(err, result: StationEntry) {
         if (err) reject(err);
         else {
@@ -113,7 +134,7 @@ export default class StationManager {
     });
   }
 
-  static async register(ip: string, name: string) {
+  static async register(ip: string, name: string, confirmed = true) {
     if (!ip.startsWith("localhost") && !formatHelper.isValidIPv4(ip)) {
       throw new Error("Invalid IPv4 address");
     }
